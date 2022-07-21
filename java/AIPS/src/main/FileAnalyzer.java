@@ -16,7 +16,7 @@ public class FileAnalyzer implements IFileAnalyzer {
 
     public List<String> readFile(String filePath) {
         List<String> fileContent = null;
-        /* Auto close IO stream after try */
+        /* Auto-close IO stream with the syntax */
         try (Stream<String> fileLines = Files.lines(Paths.get(filePath))) {
             fileContent = fileLines.collect(Collectors.toList());
         } catch (IOException e) {
@@ -39,11 +39,11 @@ public class FileAnalyzer implements IFileAnalyzer {
     }
 
     public int getTotalCar(List<Line> lines) {
-        return lines.stream().mapToInt(l -> l.NumberOfCar).sum();
+        return deduplicateLinesByTime(lines).stream().mapToInt(l -> l.NumberOfCar).sum();
     }
 
     public Map<LocalDate, Integer> getTotalCarPerDay(List<Line> lines) {
-        return lines
+        return deduplicateLinesByTime(lines)
                 .stream()
                 .collect(Collectors.groupingBy(
                         l -> l.Time.toLocalDate(),
@@ -54,7 +54,7 @@ public class FileAnalyzer implements IFileAnalyzer {
     public List<Line> getTopKLineWithMostNumberOfCar(List<Line> lines, int k) {
         List<Line> linesWithoutDuplicateTime = deduplicateLinesByTime(lines);
 
-        List<Line> linesSortedByNumberOfCar =  linesWithoutDuplicateTime.stream()
+        List<Line> linesSortedByNumberOfCar = linesWithoutDuplicateTime.stream()
                 .sorted(Comparator.comparing(Line::getNumberOfCar).reversed())
                 .collect(Collectors.toList());
         return linesSortedByNumberOfCar.stream().limit(k).collect(Collectors.toList());
@@ -76,7 +76,7 @@ public class FileAnalyzer implements IFileAnalyzer {
             for (LocalDateTime t0 : records.keySet()) {
                 LocalDateTime[] currentPeriods = new LocalDateTime[periodSize];
                 currentPeriods[0] = t0;
-                for (int i = 1; i < periodSize ; i++) {
+                for (int i = 1; i < periodSize; i++) {
                     currentPeriods[i] = currentPeriods[i - 1].plusMinutes(30);
                 }
 
@@ -104,12 +104,12 @@ public class FileAnalyzer implements IFileAnalyzer {
 
     }
 
-    private List<Line> deduplicateLinesByTime(List<Line> lines) {
+    public List<Line> deduplicateLinesByTime(List<Line> lines) {
         return lines.
-                    stream().
-                    collect(Collectors.toCollection(()->new TreeSet<>(Comparator.comparing(l ->l.Time)))).
-                    stream().
-                    collect(Collectors.toList());
+                stream().
+                collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(l -> l.Time)))).
+                stream().
+                collect(Collectors.toList());
     }
 
 

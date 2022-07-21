@@ -18,4 +18,6 @@ public interface IFileAnalyzer {
     List<Line> getTopKLineWithMostNumberOfCar(List<Line> lines, int k);
 
     LocalDateTime[] getPeriodWithLeastCar(List<Line> lines, int periodSize);
+
+    List<Line> deduplicateLinesByTime(List<Line> lines);
 }
