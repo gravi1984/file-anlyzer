@@ -1,10 +1,10 @@
 package test;
 
-import jdk.jfr.Description;
 import main.FileAnalyzer;
 import main.IFileAnalyzer;
 import main.Line;
 import org.junit.jupiter.api.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -21,21 +21,23 @@ public class FileAnalyzerTest {
     public void setup() {
         fileAnalyzer = new FileAnalyzer();
     }
+    
+
+    // We can have a FileService that handle reading files, so below can be tested thoroughly
+    // Now I'm using Files.lines to read from path, which is a static method that hard to mock
+    @Test
+    @Disabled
+    void ReadFile_ValidFile_Returns() {
+    }
 
     @Test
-    void ReadFile_ValidFile_Returns() {
-
-
-    }
-
+    @Disabled
     void ReadFile_EmptyFile_Returns() {
-
-
     }
 
+    @Test
+    @Disabled
     void ReadFile_NonExistingFile_Throws() {
-
-
     }
 
     @Test
@@ -49,13 +51,6 @@ public class FileAnalyzerTest {
         // Assert
         assertEquals(2, result.size());
 
-    }
-
-
-    @Test
-    @Disabled
-    @Description("Skip test case as assuming standard input.")
-    void ParseLine_InvalidFileContent_Throws() {
     }
 
     @Test
@@ -93,7 +88,6 @@ public class FileAnalyzerTest {
 
     }
 
-
     @Test
     void GetTopKLineWithMostNumberOfCar_ValidLinesAndK_ReturnsTopKLine() {
         // Arrange
@@ -123,26 +117,6 @@ public class FileAnalyzerTest {
 
         // Act
         List<Line> result = fileAnalyzer.getTopKLineWithMostNumberOfCar(lines, 4);
-
-        // Assert
-        assertEquals(2, result.size());
-        assertEquals("2021-12-05T15:30:00 15", result.get(0).OriginalLine);
-        assertEquals("2021-12-01T05:00:00 5", result.get(1).OriginalLine);
-
-    }
-
-    @Test
-    void GetTopKLineWithMostNumberOfCar_FileContainsDuplicateTimeRecord_DeduplicateRecordAndReturnsTopKLines() {
-        // Arrange
-        List<Line> lines = Arrays.asList(
-                new Line("2021-12-01T05:00:00 5", LocalDateTime.parse("2021-12-01T05:00:00"), 5),
-                new Line("2021-12-01T06:00:00 3", LocalDateTime.parse("2021-12-01T06:00:00"), 3),
-                new Line("2021-12-05T15:30:00 15", LocalDateTime.parse("2021-12-05T15:30:00"), 15),
-                new Line("2021-12-05T15:30:00 15", LocalDateTime.parse("2021-12-05T15:30:00"), 15)
-        );
-
-        // Act
-        List<Line> result = fileAnalyzer.getTopKLineWithMostNumberOfCar(lines, 2);
 
         // Assert
         assertEquals(2, result.size());
@@ -206,25 +180,20 @@ public class FileAnalyzerTest {
     }
 
     @Test
-    void GetPeriodWithLeastCar_FileContainsDuplicateTimeRecord_DeduplicateRecordAndReturnsPeriod() {
+    void DeduplicateLinesByTime_LinesContainDuplicateDate_ReturnsDeduplicated() {
         // Arrange
         List<Line> lines = Arrays.asList(
                 new Line("2021-12-01T05:00:00 5", LocalDateTime.parse("2021-12-01T05:00:00"), 5),
-                new Line("2021-12-01T05:00:00 55", LocalDateTime.parse("2021-12-01T05:00:00"), 100),
                 new Line("2021-12-01T05:00:00 5", LocalDateTime.parse("2021-12-01T05:00:00"), 5),
                 new Line("2021-12-01T05:30:00 12", LocalDateTime.parse("2021-12-01T05:30:00"), 12),
-                new Line("22021-12-01T06:00:00 14", LocalDateTime.parse("2021-12-01T06:00:00"), 14),
-                new Line("2021-12-05T15:00:00 15", LocalDateTime.parse("2021-12-05T15:00:00"), 15),
-                new Line("2021-12-05T15:30:00 15", LocalDateTime.parse("2021-12-05T15:30:00"), 15),
                 new Line("2021-12-05T16:00:00 15", LocalDateTime.parse("2021-12-05T16:00:00"), 15)
         );
 
         // Act
-        LocalDateTime[] result = fileAnalyzer.getPeriodWithLeastCar(lines, 3);
+        List<Line> result = fileAnalyzer.deduplicateLinesByTime(lines);
 
         // Assert
-        assertEquals(LocalDateTime.parse("2021-12-01T05:00:00"), result[0]);
-        assertEquals(LocalDateTime.parse("2021-12-01T05:30:00"), result[1]);
+        assertEquals(3, result.size());
 
     }
 }
