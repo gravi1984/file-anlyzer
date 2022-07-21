@@ -12,7 +12,7 @@
 ### Solution 
 ---
 * Java
-  * It is implemented following OOP approch and googling syntax as coding. Class and unit test code are provided.
+  * It is implemented following OOP approach and googling syntax as coding. Class and unit test code are provided.
   * To run it, navigate inside Main.java, run or alter input to see the result.
   
 * Python
