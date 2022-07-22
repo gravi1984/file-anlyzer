@@ -11,7 +11,7 @@
 
 ### Solution 
 ---
-* <em> Two solutions, in Java & Python respectively, are provided in the repository. They are not my main programing language but good to explore & learn, so any feedback will be welcome :wink: </em>
+* <em> Two solutions, in Java & Python respectively, are provided in the repository. They are not my main programing language but good to explore & learn, so any suggestion will be welcome :wink: </em>
 * Java
   * It is implemented following OOP approach and googling syntax as coding. Class and unit test code are provided.
   * To run it, navigate inside Main.java, run or alter input path to see the result.
