@@ -6,6 +6,8 @@ class FileAnalyzer:
 
     def analyze_file(self, path):
 
+        print()
+
         original_file = pd.read_csv(path, sep="\n\n", names = ['line'], header=None, engine='python')
         original_file[['time', 'number_of_car']] = original_file['line'].str.split(' ', expand=True)
         original_file['number_of_car'] = pd.to_numeric(original_file['number_of_car'])
