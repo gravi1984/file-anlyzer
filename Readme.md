@@ -21,3 +21,6 @@
 * Python
   * It uses pandas to analyze the file which comes in handy. It is an experimental implementation so only class code is provided.
   * To run it, navigate inside Main.py, run or alter input path to see the result.
+  * Execution result: 
+  <img width="276" alt="Screen Shot 2022-07-22 at 12 30 40 pm" src="https://user-images.githubusercontent.com/37531758/180366605-4cbab11a-309f-4665-a98d-ad6e2554fe81.png">
+
