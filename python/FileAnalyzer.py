@@ -5,8 +5,8 @@ import pandas as pd
 class FileAnalyzer:
 
     def analyze_file(self, path):
-        original_file = pd.read_csv(path, sep="\n\n", names = ['line'], header=None, engine='python')
 
+        original_file = pd.read_csv(path, sep="\n\n", names = ['line'], header=None, engine='python')
         original_file[['time', 'number_of_car']] = original_file['line'].str.split(' ', expand=True)
         original_file['number_of_car'] = pd.to_numeric(original_file['number_of_car'])
         original_file['time'] = pd.to_datetime(original_file['time'])
@@ -24,8 +24,6 @@ class FileAnalyzer:
 
         file_deduplicated_sorted_by_time = original_file.sort_values(by=['time']).drop_duplicates('time', keep='last')  
         file_dict = file_deduplicated_sorted_by_time.to_dict('index')
-
-        # least of consecutive n p? => dedup. sort
         start = 0
         if len(file_dict) < 3:
             least_car = None
