@@ -4,7 +4,6 @@ import main.FileAnalyzer;
 import main.IFileAnalyzer;
 import main.Line;
 import org.junit.jupiter.api.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
