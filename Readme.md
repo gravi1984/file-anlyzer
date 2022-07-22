@@ -4,7 +4,7 @@
 ### Requirement & Assumption
 ---
 - Reads, processes, and extracts information from a standard format file as required. 
-- Inpu files are assumed to be mchine-generated and clean.
+- Inpu files are assumed to be machine-generated and clean.
 - As sample file implies, input does not contains record with same time and have order in time. While considering it's common in real world that records may be delivered more than once and misordered, basic deduplication and ordering is performed when analyze the file.
 
 
